@@ -4,6 +4,7 @@ import java.rmi.RemoteException;
 import java.rmi.registry.LocateRegistry;
 import java.rmi.registry.Registry;
 import java.rmi.server.UnicastRemoteObject;
+import java.util.ArrayList;
 
 public class RectangleImpl implements Rectangle {
 
@@ -40,63 +41,88 @@ public class RectangleImpl implements Rectangle {
 //        this.height = h;
 //    }
 
-    // width getter
-    public double getWidth() {
+    // setters and getters for width and height
+    public int getWidth() {
         return width;
     }
 
-    // height getter
-    public double getHeight() {
-        return height;
-    }
+    public int getHeight() { return height; }
 
-    // width setter
     public void setWidth(int newW) {
         this.width = newW;
     }
 
-    // height setter
     public void setHeight(int newH) {
         this.height = newH;
     }
 
-    // area calculator
-    public double getArea() {
+    // area and perimeter getters
+    public int getArea() {
         return width * height;
     }
 
-    // perimeter calculator
-    public double getPerimeter() {
+    public int getPerimeter() {
         return 2 * (width + height);
     }
 
     // returns string representation of rectangle
-    @Override
-    public String toString() {
-        String representation = "The rectangle has a width of " + width + " and a height of " + height;
-        return representation;
+    public String describe() {
+        return "The rectangle has a height of " + this.height + " and a width of " + this.width;
     }
 
     // scales rectangle by chosen factor
     public void scale(int factor) {
-
-        // only make change if factor greater than 0
+        // only scale if factor greater than 0 (would like to add downward scaling later)
         if (factor > 0) {
-            // scale height and width by factor
             this.width = this.width * factor ;
             this.height = this.height * factor;
+        } else {
+            System.out.println("Invalid scaling value. Must be greater than 0.");
         }
     }
 
     // rotate rectangle by 90 degrees
     public void rotate() {
-
         // set temporary placeholder to hold onto the value of width
         int temporaryWidth = this.width;
 
         // reassign instance variables
         this.width = this.height;
         this.height = temporaryWidth;
+    }
+
+    // the following string repeating functions found at answer below by user Andi
+    // https://stackoverflow.com/questions/2255500/can-i-multiply-strings-in-java-to-repeat-sequences
+    public static String repeat(int count, String with) {
+        return new String(new char[count]).replace("\0", with);
+    }
+
+    public static String repeat(int count) {
+        return repeat(count, " ");
+    }
+
+    // draws the rectangle in stdout using "o o o" and "o   o" type strings
+    // opting for 'o' chars as it is more consistent for rotation
+    public String[] draw() {
+
+        // the string will be printed line by line to draw the rectangle so will be
+        // stored as a string array
+        int stringCount = this.height + 3;
+        String[] lines = new String[stringCount];
+
+        // first line will always be " --- " style
+        lines[0] = "Drawing rectangle:";
+        lines[1] = "o " + repeat(this.width, " o ") + " o";
+        // loop through rest of the lines to make "o   o" until we reach the bottom and make another "o o o"
+        for (int i = 2; i < stringCount; i++){
+            // check for last line or not
+            if (i!=stringCount-1){
+                lines[i] = "o " + repeat(this.width * 3) + " o";
+            } else {
+                lines[i] = "o " + repeat(this.width, " o ") + " o";
+            }
+        }
+        return lines;
     }
 
 }

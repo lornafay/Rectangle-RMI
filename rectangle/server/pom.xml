@@ -27,7 +27,7 @@
                 <artifactId>exec-maven-plugin</artifactId>
                 <version>1.6.0</version>
                 <configuration>
-                    <mainClass>Main</mainClass>
+                    <mainClass>RectangleImpl</mainClass>
                 </configuration>
             </plugin>
         </plugins>
