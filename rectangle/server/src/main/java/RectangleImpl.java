@@ -110,7 +110,7 @@ public class RectangleImpl implements Rectangle {
         int stringCount = this.height + 3;
         String[] lines = new String[stringCount];
 
-        // first line will always be " --- " style
+        // first line will always be " o o o " style
         lines[0] = "Drawing rectangle:";
         lines[1] = "o " + repeat(this.width, " o ") + " o";
         // loop through rest of the lines to make "o   o" until we reach the bottom and make another "o o o"
